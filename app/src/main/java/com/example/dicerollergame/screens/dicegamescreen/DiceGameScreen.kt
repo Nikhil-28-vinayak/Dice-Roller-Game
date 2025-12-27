@@ -1,6 +1,7 @@
 package com.example.dicerollergame.screens.dicegamescreen
 
-import androidx.compose.foundation.Image
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,93 +23,161 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.dicerollergame.R
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DiceGameScreen() {
-    Scaffold(
-        topBar = { DiceGameTopBar() }
-    ) { innerPadding ->
-        var player1Score by remember { mutableStateOf(0) }
-        var player2Score by remember { mutableStateOf(0) }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                "Let's Play",
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Black,
-                fontFamily = FontFamily.Monospace
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Box(
+    Row {
+        Scaffold(
+            topBar = { DiceGameTopBar() }
+        ) { innerPadding ->
+            //for players score
+            var player1Score by remember { mutableStateOf(0) }
+            var player2Score by remember { mutableStateOf(0) }
+            //for dice rolling
+            var diceValue by remember { mutableStateOf(0) }
+            var isPlayer1Turn by remember { mutableStateOf(true) }
+            var isRolling by remember { mutableStateOf(false) }
+
+            //for Coroutine
+            val scope = rememberCoroutineScope()
+
+            // Animation
+            val rotation = remember { Animatable(0f) }
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Black, RoundedCornerShape(8.dp))
-                    .height(50.dp),
-                contentAlignment = Alignment.Center
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Text(
-                        "Player01's Score: $player1Score",
-                        color = Color.White,
-                        fontSize = 16.sp
-                    )
-                    Text(
-                        "Player02's Score: $player2Score",
-                        color = Color.White,
-                        fontSize = 16.sp
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(100.dp))
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Row(
+                Text(
+                    "Let's Play",
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Black,
+                    fontFamily = FontFamily.Monospace
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 24.dp),
+                        .background(color = Color.Black, RoundedCornerShape(8.dp))
+                        .height(50.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Text(
+                            "Player01's Score: $player1Score",
+                            color = Color.White,
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            "Player02's Score: $player2Score",
+                            color = Color.White,
+                            fontSize = 16.sp
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(100.dp))
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp)
+                            .rotate(rotation.value),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        when (diceValue) {
+                            1 -> ScoreImage1()
+                            2 -> ScoreImage2()
+                            3 -> ScoreImage3()
+                            4 -> ScoreImage4()
+                            5 -> ScoreImage5()
+                            else -> ScoreImage6()
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.height(50.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Image(painter = painterResource(R.drawable.dice_01), contentDescription = null)
-                }
-            }
-            Spacer(modifier = Modifier.height(50.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    onClick = {player1Score++}, colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black
-                    ), modifier = Modifier.weight(1f)
-                ) {
-                    Text("P1: Roll Dice")
-                }
-                Spacer(modifier = Modifier.width(16.dp))
-                Button(
-                    onClick = {player2Score++}, colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black
-                    ), modifier = Modifier.weight(1f)
-                ) {
-                    Text("P2: Roll Dice")
+                    Button(
+                        onClick = {
+                            scope.launch {
+                                if (!isRolling) {
+                                    isRolling = true
+                                    repeat(5) {
+                                        diceValue =(1..6).random()
+                                        rotation.snapTo(0f)
+                                        rotation.animateTo(
+                                            targetValue = 180f,
+                                            animationSpec = tween(50)
+                                        )
+                                        delay(50)
+                                    }
+                                }
+                                player1Score += diceValue
+                                if (diceValue == 6) isPlayer1Turn = true
+                                else isPlayer1Turn = false
+                                isRolling = false
+                            }
+
+                        }, colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Black,
+                            disabledContainerColor = Color.LightGray,
+                            disabledContentColor = Color.Black
+                        ), modifier = Modifier.weight(1f),
+                        enabled = isPlayer1Turn
+                    ) {
+                        Text("P1: Roll Dice")
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Button(
+                        onClick = {
+                            scope.launch {
+                                if (!isRolling) {
+                                    isRolling = true
+                                    repeat(5) {
+                                        diceValue = (1..6).random()
+                                        rotation.snapTo(0f)
+                                        rotation.animateTo(
+                                            targetValue = 180f,
+                                            animationSpec = tween(50)
+                                        )
+                                        delay(50)
+                                    }
+                                }
+                                player2Score += diceValue
+                                if (diceValue == 6) isPlayer1Turn = false
+                                else isPlayer1Turn = true
+                                isRolling = false
+                            }
+                        }, colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Black,
+                            disabledContainerColor = Color.LightGray,
+                            disabledContentColor = Color.Black
+                        ), modifier = Modifier.weight(1f),
+                        enabled = !isPlayer1Turn
+                    ) {
+                        Text("P2: Roll Dice")
+                    }
                 }
             }
         }
