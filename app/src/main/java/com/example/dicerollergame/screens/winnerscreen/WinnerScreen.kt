@@ -22,11 +22,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.dicerollergame.R
 
-@Preview(showBackground = true, showSystemUi = true)
+
 @Composable
-fun WinnerScreen() {
+fun WinnerScreen(navController: NavHostController, winnerName: String) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally

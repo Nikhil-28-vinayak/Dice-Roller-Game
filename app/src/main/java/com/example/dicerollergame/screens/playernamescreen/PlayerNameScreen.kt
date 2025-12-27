@@ -2,7 +2,6 @@ package com.example.dicerollergame.screens.playernamescreen
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,12 +26,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.dicerollergame.R
+import com.example.dicerollergame.navigation.Routes
 
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PlayerNameScreen() {
+fun PlayerNameScreen(navController: NavHostController) {
     var player01 by remember { mutableStateOf("") }
     var player02 by remember { mutableStateOf("") }
     Column(
@@ -77,16 +77,18 @@ fun PlayerNameScreen() {
         )
         Spacer(modifier = Modifier.height(20.dp))
         Button(
-            onClick = {},
+            onClick = {navController.navigate(Routes.DiceGame(player01=player01,player02=player02))},
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black,
+                disabledContainerColor = Color.LightGray,
+                disabledContentColor = Color.Gray
             ), shape = RoundedCornerShape(8.dp),
             enabled = player01.isNotEmpty()&&player02.isNotEmpty()&&player02!=player01
         ) {
-            Text("START AGAIN", fontSize = 16.sp)
+            Text("START GAME", fontSize = 16.sp)
         }
     }
 }

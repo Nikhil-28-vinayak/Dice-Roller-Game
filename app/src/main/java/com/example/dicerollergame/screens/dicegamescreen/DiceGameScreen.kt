@@ -34,12 +34,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@Preview(showBackground = true, showSystemUi = true)
+
 @Composable
-fun DiceGameScreen() {
+fun DiceGameScreen(navController: NavHostController, player01: String, player02: String) {
     Row {
         Scaffold(
             topBar = { DiceGameTopBar() }
@@ -83,12 +84,12 @@ fun DiceGameScreen() {
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         Text(
-                            "Player01's Score: $player1Score",
+                            "$player01 's Score: $player1Score",
                             color = Color.White,
                             fontSize = 16.sp
                         )
                         Text(
-                            "Player02's Score: $player2Score",
+                            "$player02 's Score: $player2Score",
                             color = Color.White,
                             fontSize = 16.sp
                         )
