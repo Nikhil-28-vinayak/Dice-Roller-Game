@@ -14,5 +14,5 @@ sealed class Routes {
     ) : Routes()
 
     @Serializable
-    data class Winner(val winnerName: String) : Routes()
+    data class Winner(val winnerName: String, val looserName: String) : Routes()
 }

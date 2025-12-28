@@ -12,7 +12,6 @@ import com.example.dicerollergame.navigation.Routes
 import com.example.dicerollergame.screens.dicegamescreen.DiceGameScreen
 import com.example.dicerollergame.screens.playernamescreen.PlayerNameScreen
 import com.example.dicerollergame.screens.winnerscreen.WinnerScreen
-import com.example.dicerollergame.ui.theme.DiceRollerGameTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     }
                     composable<Routes.Winner> {backStackEntry->
                         val args = backStackEntry.toRoute<Routes.Winner>()
-                        WinnerScreen(navController,args.winnerName)
+                        WinnerScreen(navController,args.winnerName,args.looserName)
                     }
                 }
         }

@@ -1,6 +1,7 @@
 package com.example.dicerollergame.screens.winnerscreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,20 +20,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.dicerollergame.R
+import com.example.dicerollergame.navigation.Routes
 
 
 @Composable
-fun WinnerScreen(navController: NavHostController, winnerName: String) {
+fun WinnerScreen(navController: NavHostController, winnerName: String, looserName: String) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.height(100.dp))
         Image(
             painter = painterResource(R.drawable.winner_trophy),
             contentDescription = null,
@@ -46,14 +47,14 @@ fun WinnerScreen(navController: NavHostController, winnerName: String) {
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            "playerName Won the Game!",
+            "$winnerName Won the Game!",
             fontSize = 25.sp,
             fontWeight = FontWeight.SemiBold,
             fontFamily = FontFamily.Monospace
         )
         Spacer(modifier = Modifier.height(40.dp))
         Button(
-            onClick = {},
+            onClick = {navController.navigate(Routes.DiceGame(player01 = winnerName, player02 = looserName))},
             modifier = Modifier.padding(horizontal = 24.dp)
                 .fillMaxWidth()
                 .height(50.dp),
@@ -62,6 +63,18 @@ fun WinnerScreen(navController: NavHostController, winnerName: String) {
             ), shape = RoundedCornerShape(8.dp),
         ) {
             Text("PLAY AGAIN", fontSize = 16.sp)
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = {navController.navigate(Routes.PlayerName)},
+            modifier = Modifier.padding(horizontal = 24.dp)
+                .fillMaxWidth()
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Black,
+            ), shape = RoundedCornerShape(8.dp),
+        ) {
+            Text("START NEW GAME", fontSize = 16.sp)
         }
     }
 

@@ -31,10 +31,10 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.dicerollergame.navigation.Routes
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 fun DiceGameScreen(navController: NavHostController, player01: String, player02: String) {
     Row {
         Scaffold(
-            topBar = { DiceGameTopBar() }
+            topBar = { DiceGameTopBar(navController) }
         ) { innerPadding ->
             //for players score
             var player1Score by remember { mutableStateOf(0) }
@@ -138,6 +138,10 @@ fun DiceGameScreen(navController: NavHostController, player01: String, player02:
                                 if (diceValue == 6) isPlayer1Turn = true
                                 else isPlayer1Turn = false
                                 isRolling = false
+                                if (player1Score>=50){
+                                    navController.navigate(Routes.Winner(winnerName = player01, looserName = player02))
+                                    return@launch
+                                }
                             }
 
                         }, colors = ButtonDefaults.buttonColors(
@@ -169,6 +173,10 @@ fun DiceGameScreen(navController: NavHostController, player01: String, player02:
                                 if (diceValue == 6) isPlayer1Turn = false
                                 else isPlayer1Turn = true
                                 isRolling = false
+                                if(player2Score>=50){
+                                    navController.navigate(Routes.Winner(winnerName = player02, looserName = player01))
+                                    return@launch
+                                }
                             }
                         }, colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Black,
