@@ -26,11 +26,11 @@ class MainActivity : ComponentActivity() {
                     }
                     composable<Routes.DiceGame> {backStackEntry->
                         val args = backStackEntry.toRoute<Routes.DiceGame>()
-                        DiceGameScreen(navController,args.player01,args.player02)
+                        DiceGameScreen(navController,args.player01,args.player02,args.totalScore)
                     }
                     composable<Routes.Winner> {backStackEntry->
                         val args = backStackEntry.toRoute<Routes.Winner>()
-                        WinnerScreen(navController,args.winnerName,args.looserName)
+                        WinnerScreen(navController,args.winnerName,args.looserName,args.totalScore)
                     }
                 }
         }

@@ -28,7 +28,12 @@ import com.example.dicerollergame.navigation.Routes
 
 
 @Composable
-fun WinnerScreen(navController: NavHostController, winnerName: String, looserName: String) {
+fun WinnerScreen(
+    navController: NavHostController,
+    winnerName: String,
+    looserName: String,
+    totalScore: Int
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,7 +59,7 @@ fun WinnerScreen(navController: NavHostController, winnerName: String, looserNam
         )
         Spacer(modifier = Modifier.height(40.dp))
         Button(
-            onClick = {navController.navigate(Routes.DiceGame(player01 = winnerName, player02 = looserName))},
+            onClick = {navController.navigate(Routes.DiceGame(player01 = winnerName, player02 = looserName, totalScore = totalScore))},
             modifier = Modifier.padding(horizontal = 24.dp)
                 .fillMaxWidth()
                 .height(50.dp),

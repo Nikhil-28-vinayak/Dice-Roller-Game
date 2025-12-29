@@ -40,7 +40,12 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun DiceGameScreen(navController: NavHostController, player01: String, player02: String) {
+fun DiceGameScreen(
+    navController: NavHostController,
+    player01: String,
+    player02: String,
+    totalScore: Int
+) {
     Row {
         Scaffold(
             topBar = { DiceGameTopBar(navController) }
@@ -138,8 +143,8 @@ fun DiceGameScreen(navController: NavHostController, player01: String, player02:
                                 if (diceValue == 6) isPlayer1Turn = true
                                 else isPlayer1Turn = false
                                 isRolling = false
-                                if (player1Score>=50){
-                                    navController.navigate(Routes.Winner(winnerName = player01, looserName = player02))
+                                if (player1Score>=totalScore){
+                                    navController.navigate(Routes.Winner(winnerName = player01, looserName = player02,totalScore=totalScore))
                                     return@launch
                                 }
                             }
@@ -173,8 +178,8 @@ fun DiceGameScreen(navController: NavHostController, player01: String, player02:
                                 if (diceValue == 6) isPlayer1Turn = false
                                 else isPlayer1Turn = true
                                 isRolling = false
-                                if(player2Score>=50){
-                                    navController.navigate(Routes.Winner(winnerName = player02, looserName = player01))
+                                if(player2Score>=totalScore){
+                                    navController.navigate(Routes.Winner(winnerName = player02, looserName = player01, totalScore = totalScore))
                                     return@launch
                                 }
                             }

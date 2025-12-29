@@ -11,8 +11,9 @@ sealed class Routes {
     data class DiceGame(
         val player01: String,
         val player02: String,
+         val totalScore:Int
     ) : Routes()
 
     @Serializable
-    data class Winner(val winnerName: String, val looserName: String) : Routes()
+    data class Winner(val winnerName: String, val looserName: String,val totalScore: Int) : Routes()
 }
