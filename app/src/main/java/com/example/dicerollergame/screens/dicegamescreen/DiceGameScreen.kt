@@ -77,6 +77,8 @@ fun DiceGameScreen(
                     fontFamily = FontFamily.Monospace
                 )
                 Spacer(modifier = Modifier.height(20.dp))
+                Text("Score Limit: $totalScore", fontSize =16.sp, fontWeight = FontWeight.SemiBold )
+                Spacer(modifier = Modifier.height(20.dp))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
