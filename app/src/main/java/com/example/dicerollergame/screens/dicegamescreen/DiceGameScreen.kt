@@ -14,9 +14,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -90,16 +94,34 @@ fun DiceGameScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        Text(
-                            "$player01 's Score: $player1Score",
-                            color = Color.White,
-                            fontSize = 16.sp
-                        )
-                        Text(
-                            "$player02 's Score: $player2Score",
-                            color = Color.White,
-                            fontSize = 16.sp
-                        )
+                        Row() {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                            Text(
+                                "$player01 's Score: $player1Score",
+                                color = Color.White,
+                                fontSize = 16.sp,
+                                modifier = Modifier.padding(start = 10.dp),
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                        Row {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                            Text(
+                                "$player02 's Score: $player2Score",
+                                color = Color.White,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.padding(start = 10.dp)
+                            )
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(100.dp))
@@ -124,7 +146,8 @@ fun DiceGameScreen(
                 Spacer(modifier = Modifier.height(50.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Button(
                         onClick = {
@@ -158,7 +181,7 @@ fun DiceGameScreen(
                         ), modifier = Modifier.weight(1f),
                         enabled = isPlayer1Turn
                     ) {
-                        Text("P1: Roll Dice")
+                        Text("$player01: Roll Dice")
                     }
                     Spacer(modifier = Modifier.width(16.dp))
                     Button(
@@ -192,7 +215,7 @@ fun DiceGameScreen(
                         ), modifier = Modifier.weight(1f),
                         enabled = !isPlayer1Turn
                     ) {
-                        Text("P2: Roll Dice")
+                        Text("$player02: Roll Dice")
                     }
                 }
             }

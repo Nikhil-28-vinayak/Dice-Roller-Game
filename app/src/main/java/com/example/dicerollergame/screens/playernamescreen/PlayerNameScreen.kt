@@ -15,9 +15,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -56,10 +59,11 @@ fun PlayerNameScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(70.dp))
         OutlinedTextField(
             value = player01,
-            onValueChange = { if (it.length <= 9) player01 = it },
+            onValueChange = { if (it.length <= 8) player01 = it },
             label = { Text("Player 01 Name") },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
+            leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = null) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Black,
                 unfocusedBorderColor = Color.Black,
@@ -73,10 +77,11 @@ fun PlayerNameScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = player02,
-            onValueChange = { if (it.length <= 9) player02 = it },
+            onValueChange = { if (it.length <= 8) player02 = it },
             label = { Text("Player 02 Name") },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
+            leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = null) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color.Black,
                 unfocusedBorderColor = Color.Black,
@@ -90,11 +95,17 @@ fun PlayerNameScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(30.dp))
 
         Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(vertical = 30.dp, horizontal = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier.padding(vertical = 30.dp, horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Text("Select Score", fontSize = 24.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
                     Box(
                         modifier = Modifier
                             .clickable(onClick = {})
