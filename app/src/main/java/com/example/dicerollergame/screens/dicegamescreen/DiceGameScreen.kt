@@ -48,7 +48,7 @@ fun DiceGameScreen(
     navController: NavHostController,
     player01: String,
     player02: String,
-    totalScore: Int
+    totalScore1: Int
 ) {
     Row {
         Scaffold(
@@ -81,7 +81,7 @@ fun DiceGameScreen(
                     fontFamily = FontFamily.Monospace
                 )
                 Spacer(modifier = Modifier.height(20.dp))
-                Text("Score Limit: $totalScore", fontSize =16.sp, fontWeight = FontWeight.SemiBold )
+                Text("Score Limit: $totalScore1", fontSize =16.sp, fontWeight = FontWeight.SemiBold )
                 Spacer(modifier = Modifier.height(20.dp))
                 Box(
                     modifier = Modifier
@@ -168,8 +168,8 @@ fun DiceGameScreen(
                                 if (diceValue == 6) isPlayer1Turn = true
                                 else isPlayer1Turn = false
                                 isRolling = false
-                                if (player1Score>=totalScore){
-                                    navController.navigate(Routes.Winner(winnerName = player01, looserName = player02,totalScore=totalScore))
+                                if (player1Score>=totalScore1){
+                                    navController.navigate(Routes.Winner(winnerName = player01, looserName = player02,totalScore=totalScore1))
                                     return@launch
                                 }
                             }
@@ -179,7 +179,8 @@ fun DiceGameScreen(
                             disabledContainerColor = Color.LightGray,
                             disabledContentColor = Color.Black
                         ), modifier = Modifier.weight(1f),
-                        enabled = isPlayer1Turn
+                        enabled = isPlayer1Turn,
+                        elevation = ButtonDefaults.buttonElevation(10.dp)
                     ) {
                         Text("$player01: Roll Dice")
                     }
@@ -203,8 +204,8 @@ fun DiceGameScreen(
                                 if (diceValue == 6) isPlayer1Turn = false
                                 else isPlayer1Turn = true
                                 isRolling = false
-                                if(player2Score>=totalScore){
-                                    navController.navigate(Routes.Winner(winnerName = player02, looserName = player01, totalScore = totalScore))
+                                if(player2Score>=totalScore1){
+                                    navController.navigate(Routes.Winner(winnerName = player02, looserName = player01, totalScore = totalScore1))
                                     return@launch
                                 }
                             }
@@ -213,7 +214,8 @@ fun DiceGameScreen(
                             disabledContainerColor = Color.LightGray,
                             disabledContentColor = Color.Black
                         ), modifier = Modifier.weight(1f),
-                        enabled = !isPlayer1Turn
+                        enabled = !isPlayer1Turn,
+                        elevation = ButtonDefaults.buttonElevation(10.dp)
                     ) {
                         Text("$player02: Roll Dice")
                     }

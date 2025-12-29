@@ -66,6 +66,7 @@ fun WinnerScreen(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black,
             ), shape = RoundedCornerShape(8.dp),
+            elevation = ButtonDefaults.buttonElevation(10.dp)
         ) {
             Text("PLAY AGAIN", fontSize = 16.sp)
         }
@@ -78,6 +79,7 @@ fun WinnerScreen(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black,
             ), shape = RoundedCornerShape(8.dp),
+            elevation = ButtonDefaults.buttonElevation(10.dp)
         ) {
             Text("START NEW GAME", fontSize = 16.sp)
         }

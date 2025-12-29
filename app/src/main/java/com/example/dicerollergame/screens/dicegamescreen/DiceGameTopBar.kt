@@ -26,7 +26,8 @@ fun DiceGameTopBar(navController: NavHostController) {
                 onClick = {navController.navigate(Routes.PlayerName)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Black
-                ), modifier = Modifier.padding(end = 16.dp)
+                ), modifier = Modifier.padding(end = 16.dp),
+                elevation = ButtonDefaults.buttonElevation(10.dp)
             ) {
                 Text("New Game")
             }

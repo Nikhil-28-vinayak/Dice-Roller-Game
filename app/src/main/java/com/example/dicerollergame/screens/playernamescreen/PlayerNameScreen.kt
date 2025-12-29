@@ -166,6 +166,7 @@ fun PlayerNameScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
+            elevation = ButtonDefaults.buttonElevation(10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black,
                 disabledContainerColor = Color.LightGray,
